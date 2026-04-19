@@ -1,0 +1,40 @@
+version: '3.8'
+
+services:
+  web:
+    build: .
+    command: python run_waitress_server.py
+    volumes:
+      - .:/app
+    environment:
+      - WAITRESS_HOST=0.0.0.0
+      - DJANGO_SETTINGS_MODULE=jicasite.settings
+      - DB_HOST=astro_db
+      - DB_PORT=5432
+      - DB_NAME=postgres
+      - DB_SCHEMA=public
+      - DB_USER=admin
+      - DB_PASSWORD=password123 # Using default dev credentials, change for production
+    extra_hosts:
+      - "host.docker.internal:host-gateway" # Required for Linux/some configs to resolve host
+    networks:
+      - jica_network
+      - astro-app_default
+
+  nginx:
+    image: nginx:1.24
+    ports:
+      - "9002:8000"
+    volumes:
+      - ./nginx_docker.conf:/etc/nginx/nginx.conf:ro
+      - ./staticfiles:/app/staticfiles:ro
+      - ./media:/app/media:ro
+    depends_on:
+      - web
+    networks:
+      - jica_network
+
+networks:
+  jica_network:
+  astro-app_default:
+    external: true
