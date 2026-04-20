@@ -9,12 +9,12 @@ services:
     environment:
       - WAITRESS_HOST=0.0.0.0
       - DJANGO_SETTINGS_MODULE=jicasite.settings
-      - DB_HOST=astro_db
+      - DB_HOST=localhost
       - DB_PORT=5432
       - DB_NAME=postgres
       - DB_SCHEMA=public
-      - DB_USER=admin
-      - DB_PASSWORD=password123 # Using default dev credentials, change for production
+      - DB_USER=postgres
+      - DB_PASSWORD=root # Using default dev credentials, change for production
     extra_hosts:
       - "host.docker.internal:host-gateway" # Required for Linux/some configs to resolve host
     networks:

@@ -31,7 +31,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = '7#m)ra^8l%@_5fojx$1wxy7mxn4v&opel3xtw!kb@_((bv9d$%'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = config('DEBUG', default=True, cast=bool)
 
 ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '183.82.114.29', 'jicasite.tripura.gov.in', '*']
 
@@ -266,8 +266,8 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': os.environ.get('DB_NAME', 'postgres'),
-        'USER': os.environ.get('DB_USER', 'admin'),
-        'PASSWORD': os.environ.get('DB_PASSWORD', 'password123'),
+        'USER': os.environ.get('DB_USER', 'postgres'),
+        'PASSWORD': os.environ.get('DB_PASSWORD', 'root'),
         'HOST': os.environ.get('DB_HOST', 'localhost'),
         'PORT': os.environ.get('DB_PORT', '5432'),
         'OPTIONS': {
@@ -340,4 +340,4 @@ CONTENT_SECURITY_POLICY = {
         "frame-src": ["'self'", "https://www.facebook.com", "https://www.youtube.com", "https://platform.twitter.com", "https://syndication.twitter.com"],
     },
 }
-CSP_REPORT_ONLY = False # Keep this for legacy compatibility if needed
+# CSP_REPORT_ONLY = False # Keep this for legacy compatibility if needed
